@@ -4,7 +4,7 @@ const userSchema = new Schema(
   {
     name: String,
     company: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
          ref: "Company" },
 
     email: {

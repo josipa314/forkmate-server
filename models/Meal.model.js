@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const foodSchema = new Schema({
+const mealSchema = new Schema({
     type: { type: String, enum: ["lunch", "snack", "dinner"]},
     portions: Number,
     description: String,
@@ -12,10 +12,10 @@ const foodSchema = new Schema({
         ref: "Company" 
     }, */
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
        ref: "User" }
 });
 
-const Food = model("Food", foodSchema);
+const Meal = model("Meal", mealSchema);
 
-module.exports = Food;
+module.exports = Meal;
