@@ -3,6 +3,30 @@ const router = require("express").Router();
 
 const Meal = require('../models/Meal.model');
 const Company = require('../models/Company.model');
+const User = require ('../models/User.model')
+
+
+
+//  Create a new meal
+ router.post('/meals', (req, res, next) => {
+    const { info } = req.body;
+
+    const newmeal = { 
+        info
+    }
+
+    Meal.create(newProject) //send a query to the DB 
+        .then(response => res.status(201).json(response))
+        .catch(err => {
+            console.log("error creating a new project", err);
+            res.status(500).json({
+                message: "error creating a new project",
+                error: err
+            });
+        })
+});
+
+
 
 // Get list of meals
 router.get("/meals", (req, res, next) => {
@@ -21,23 +45,6 @@ router.get("/meals", (req, res, next) => {
 });
 
 
-//  Create a new meal
-/* router.post('/meals', (req, res, next) => {
-    const { title, description, companyId } = req.body;
 
-    const newmeal = { 
-        location, 
-        description,
-    }
-
-    Meal.create(newmeal)
-        .then(mealFromDB => {
-            return Company.findByIdAndUpdate(companyId, { $push: { meals: mealFromDB._id } } );
-        })
-        .then( response => {
-            res.status(201).json(response)
-        })
-        .catch(err => res.json(err));
-}); */
 
 module.exports = router;

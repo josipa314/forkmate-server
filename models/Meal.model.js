@@ -1,19 +1,18 @@
 const { Schema, model } = require("mongoose");
 
 const mealSchema = new Schema({
-    type: { type: String, enum: ["lunch", "snack", "dinner"]},
-    portions: Number,
-    description: String,
-    location: String,
-    time: Number,
-    message: String,
+   /*  type: { type: String, enum: ["lunch", "snack", "dinner"]},
+    portions: Number, */
+    info: String,
+   /*  location: String,
+    time: Number, */
     /* company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company" 
     }, */
-    user: {
+    /* user: {
       type: Schema.Types.ObjectId,
-       ref: "User" }
+       ref: "User" } */
 });
 
 const Meal = model("Meal", mealSchema);
