@@ -7,12 +7,12 @@ const User = require ('../models/User.model')
 
 
 
-//  Create a new meal
+//  CREATE a new meal
  router.post('/meals', (req, res, next) => {
-    const {info} = req.body;
+    const {description} = req.body;
 
     const newMeal = { 
-        info
+        description
     }
 
     Meal.create(newMeal) //send a query to the DB 
@@ -27,7 +27,7 @@ const User = require ('../models/User.model')
 });
 
 
-// Get list of meals
+// GET LIST of meals
  router.get("/meals", (req, res, next) => {
     Meal.find()
          /* .populate("user") */ 
@@ -43,7 +43,7 @@ const User = require ('../models/User.model')
         })
 }); 
 
-//  Get details of a specific meal by id
+//  GET DETAILS of a specific meal by id
 router.get('/meals/:mealId', (req, res, next) => {
     
     const { mealId } = req.params;
@@ -65,7 +65,8 @@ router.get('/meals/:mealId', (req, res, next) => {
         })
 });
 
-// Updates a specific meal by id
+
+// UPDATES a specific meal by id
 router.put('/meals/:mealId', (req, res, next) => {
     const { mealId } = req.params;
 
@@ -90,7 +91,8 @@ router.put('/meals/:mealId', (req, res, next) => {
         })
 });
 
-// Delete a specific meal by id
+
+// DELETE a specific meal by id
 router.delete('/meals/:mealId', (req, res, next) => {
     const { mealId } = req.params;
 
@@ -98,7 +100,7 @@ router.delete('/meals/:mealId', (req, res, next) => {
         res.status(400).json({ message: 'Specified id is not valid' });
         return;
     }
-    
+
 
     // Project.findByIdAndRemove(projectId)
     //     .then(() => res.json({ message: `Project with ${projectId} is removed successfully.` }))
