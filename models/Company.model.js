@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const companySchema = new Schema({
-    name: String,
+    name: {type: String, enum: ["Netflix", "Microsoft", "TooGoodToGo"]},
     city: String,
     
 });

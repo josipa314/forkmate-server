@@ -10,7 +10,7 @@ const saltRounds = 10;
 
 // Create Account
 router.post('/signup', (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, name, company, } = req.body;
 
   // Check if email or password or name are provided as empty string 
   if (email === '' || password === '') {
@@ -32,7 +32,7 @@ router.post('/signup', (req, res, next) => {
     return;
   }
 
-
+ 
   // Check the users collection if a user with the same email already exists
   User.findOne({ email })
     .then((foundUser) => {
@@ -48,15 +48,15 @@ router.post('/signup', (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then` 
-      return User.create({ email, password: hashedPassword });
+      return User.create({ email, name, company, password: hashedPassword });
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { email, _id } = createdUser;
+      const { email, name, company, _id } = createdUser;
 
       // Create a new object that doesn't expose the password
-      const user = { email, _id };
+      const user = { email, name, company, _id };
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
@@ -70,7 +70,7 @@ router.post('/signup', (req, res, next) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, name, company,} = req.body;
 
   // Check if email or password are provided as empty string 
   if (email === '' || password === '') {
@@ -94,10 +94,10 @@ router.post('/login', (req, res, next) => {
       if (passwordCorrect) { // login was successful
 
         // Deconstruct the user object to omit the password
-        const { _id, email } = foundUser;
+        const { _id, email, name, company, } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email };
+        const payload = { _id, email, name, company };
 
         // Create and sign the token
         const authToken = jwt.sign(
@@ -116,6 +116,7 @@ router.post('/login', (req, res, next) => {
     })
     .catch(err => res.status(500).json({ message: "Internal Server Error" }));
 });
+
 
 
 // Verify

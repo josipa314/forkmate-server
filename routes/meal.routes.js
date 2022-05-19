@@ -6,11 +6,12 @@ const Company = require('../models/Company.model');
 const User = require ('../models/User.model')
 
 const { populate } = require("../models/Meal.model");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 
 // CRUD works
 //  CREATE a new meal
- router.post('/meals', (req, res, next) => {
+ router.post('/meals', isAuthenticated, (req, res, next) => {
     const {type, description, title, whereWhen, company, user} = req.body;
 
     const newMeal = { 

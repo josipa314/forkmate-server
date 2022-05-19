@@ -16,7 +16,7 @@ require("./config")(app);
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
-/* app.use("/api/auth", require("./routes/auth.routes")); */
+app.use("/api/auth", require("./routes/auth.routes"))
 app.use("/api", require("./routes/index.routes"));
 app.use("/api", require("./routes/meal.routes"));
 app.use("/api", require("./routes/company.routes")); 
