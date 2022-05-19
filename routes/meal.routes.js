@@ -5,14 +5,21 @@ const Meal = require('../models/Meal.model');
 const Company = require('../models/Company.model');
 const User = require ('../models/User.model')
 
+const { populate } = require("../models/Meal.model");
 
 
+// CRUD works
 //  CREATE a new meal
  router.post('/meals', (req, res, next) => {
-    const {description} = req.body;
+    const {type, description, title, whereWhen, company, user} = req.body;
 
     const newMeal = { 
-        description
+     type,
+     title,
+     description, 
+     whereWhen,
+     company,
+     user
     }
 
     Meal.create(newMeal) //send a query to the DB 
@@ -30,7 +37,8 @@ const User = require ('../models/User.model')
 // GET LIST of meals
  router.get("/meals", (req, res, next) => {
     Meal.find()
-         /* .populate("user") */ 
+         /* populate("user") 
+         populate("company") */
         .then(response => {
             res.json(response)
         })
@@ -55,7 +63,7 @@ router.get('/meals/:mealId', (req, res, next) => {
 
    Meal.findById(mealId)
        /*  .populate('user') */
-        .then(project => res.json(project))
+        .then(meal => res.json(meal))
         .catch(err => {
             console.log("error getting details of a meal", err);
             res.status(500).json({

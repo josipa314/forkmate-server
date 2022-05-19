@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const companySchema = new Schema({
     name: String,
-    address: String,
+    city: String,
     
 });
 
