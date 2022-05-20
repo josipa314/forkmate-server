@@ -70,7 +70,7 @@ router.post('/signup', (req, res, next) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-  const { email, password, name, company,} = req.body;
+  const { email, password} = req.body;
 
   // Check if email or password are provided as empty string 
   if (email === '' || password === '') {

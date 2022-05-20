@@ -7,6 +7,7 @@ const User = require ('../models/User.model')
 
 const { populate } = require("../models/Meal.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const isCreator = require ("../middleware/isCreator.js")
 
 
 // CRUD works
@@ -32,6 +33,15 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
                 error: err
             });
         })
+});
+
+router.get('/mymeals', isAuthenticated, (req, res, next) => {
+  
+    const { _id } = req.payload
+    Meal.find({ user: _id })
+      /*   .populate("user") */
+        .then(myMeal => res.json(myMeal))
+        .catch((err) => next(err));
 });
 
 
@@ -77,7 +87,7 @@ router.get('/meals/:mealId', (req, res, next) => {
 
 
 // UPDATES a specific meal by id
-router.put('/meals/:mealId', isAuthenticated, (req, res, next) => {
+router.put('/meals/:mealId', isAuthenticated, isCreator, (req, res, next) => {
     const { mealId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(mealId)) {
@@ -105,7 +115,7 @@ router.put('/meals/:mealId', isAuthenticated, (req, res, next) => {
 
 
 // DELETE a specific meal by id
-router.delete('/meals/:mealId', isAuthenticated, (req, res, next) => {
+router.delete('/meals/:mealId', isAuthenticated, isCreator, (req, res, next) => {
     const { mealId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(mealId)) {
