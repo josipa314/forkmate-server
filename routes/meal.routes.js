@@ -35,6 +35,7 @@ const isCreator = require ("../middleware/isCreator.js")
         })
 });
 
+//Get only MY meals
 router.get('/mymeals', isAuthenticated, (req, res, next) => {
   
     const { _id } = req.payload
@@ -94,11 +95,6 @@ router.put('/meals/:mealId', isAuthenticated, isCreator, (req, res, next) => {
         res.status(400).json({ message: 'Specified id is not valid' });
         return;
     }
-
-    // const newDetails = {
-    //     info: req.body.info,
-    //    
-    // }
 
    Meal.findByIdAndUpdate(mealId, req.body, { new: true })
    .populate("user") 
