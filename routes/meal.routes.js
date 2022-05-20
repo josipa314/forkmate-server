@@ -38,8 +38,8 @@ const { isAuthenticated } = require("../middleware/jwt.middleware");
 // GET LIST of meals
  router.get("/meals", (req, res, next) => {
     Meal.find()
-         /* populate("user") 
-         populate("company") */
+         .populate("user") 
+         .populate("company")
         .then(response => {
             res.json(response)
         })
@@ -63,7 +63,8 @@ router.get('/meals/:mealId', (req, res, next) => {
     }
 
    Meal.findById(mealId)
-       /*  .populate('user') */
+        .populate("user") 
+        .populate("company")
         .then(meal => res.json(meal))
         .catch(err => {
             console.log("error getting details of a meal", err);
@@ -76,7 +77,7 @@ router.get('/meals/:mealId', (req, res, next) => {
 
 
 // UPDATES a specific meal by id
-router.put('/meals/:mealId', (req, res, next) => {
+router.put('/meals/:mealId', isAuthenticated, (req, res, next) => {
     const { mealId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(mealId)) {
@@ -90,6 +91,8 @@ router.put('/meals/:mealId', (req, res, next) => {
     // }
 
    Meal.findByIdAndUpdate(mealId, req.body, { new: true })
+   .populate("user") 
+   .populate("company")
         .then((updatedMeal) => res.json(updatedMeal))
         .catch(err => {
             console.log("error updating meal", err);
@@ -102,7 +105,7 @@ router.put('/meals/:mealId', (req, res, next) => {
 
 
 // DELETE a specific meal by id
-router.delete('/meals/:mealId', (req, res, next) => {
+router.delete('/meals/:mealId', isAuthenticated, (req, res, next) => {
     const { mealId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(mealId)) {
