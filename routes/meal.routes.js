@@ -13,15 +13,15 @@ const isCreator = require ("../middleware/isCreator.js")
 // CRUD works
 //  CREATE a new meal
  router.post('/meals', isAuthenticated, (req, res, next) => {
-    const {type, description, title, whereWhen, company, user} = req.body;
+    const {type, description, title, whereWhen} = req.body;
 
     const newMeal = { 
      type,
      title,
      description, 
      whereWhen,
-     company,
-     user
+     company: req.payload.company,
+     user: req.payload._id
     }
 
     Meal.create(newMeal) //send a query to the DB 
