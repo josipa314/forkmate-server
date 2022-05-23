@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const User = require("../models/User.model");
+const Company = require("../models/Company.model");
 
 const router = express.Router();
 const saltRounds = 10;
@@ -42,13 +43,16 @@ router.post('/signup', (req, res, next) => {
         return;
       }
 
+      return Company.findOne({name: company})
+    })
+    .then((companyObject)=> {
       // If email is unique, proceed to hash the password
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-
-      // Create the new user in the database
+  
+            // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then` 
-      return User.create({ email, name, company, password: hashedPassword });
+      return User.create({ email, name, company: companyObject._id, password: hashedPassword })
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
