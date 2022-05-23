@@ -28,6 +28,15 @@ router.post('/company', (req, res, next) => {
         })
 });
 
+
+//GET enum values
+router.get('/company/enumcompanyvalues', async (req, res, next) => { 
+    const companyTypes=Company.schema.path("name").enumValues
+      await res.json(companyTypes)
+  })
+  
+
+
 // List ALL companies
 router.get("/companies", (req, res, next) => {
     Company.find()
@@ -88,7 +97,7 @@ router.put('/companies/:companyId', (req, res, next) => {
 });
 
 
-// DELETe by id
+// DELETE by id
 router.delete('/companies/:companyId', (req, res, next) => {
     const { companyId } = req.params;
 

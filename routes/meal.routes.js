@@ -23,6 +23,7 @@ const isCreator = require ("../middleware/isCreator.js")
      company: req.payload.company,
      user: req.payload._id
     }
+    //console.log(req.payload);
 
     Meal.create(newMeal) //send a query to the DB 
         .then(response => res.status(201).json(response))
