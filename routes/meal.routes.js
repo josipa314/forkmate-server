@@ -45,6 +45,12 @@ router.get('/mymeals', isAuthenticated, (req, res, next) => {
         .catch((err) => next(err));
 });
 
+//GET enum values
+router.get('/meals/enumvalues', async (req, res, next) => { 
+  const mealTypes=Meal.schema.path("type").enumValues
+    await res.json(mealTypes)
+})
+
 
 // GET LIST of meals
  router.get("/meals", (req, res, next) => {
