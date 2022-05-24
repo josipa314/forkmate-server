@@ -7,7 +7,6 @@ const User = require ('../models/User.model')
 
 const { populate } = require("../models/Meal.model");
 
-// CRUD WORKS
 // CREATE company
 router.post('/company', (req, res, next) => {
     const { name, city } = req.body;
